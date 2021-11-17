@@ -10,5 +10,5 @@ data class MashTemp(
     val duration: Int,
     @SerializedName("temp")
     @Expose
-    val temp: TempX
+    val temp: Temp
 )

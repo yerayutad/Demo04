@@ -7,7 +7,7 @@ import com.google.gson.annotations.Expose
 data class Malt(
     @SerializedName("amount")
     @Expose
-    val amount: AmountX,
+    val amount: Amount,
     @SerializedName("name")
     @Expose
     val name: String
