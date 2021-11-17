@@ -8,8 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.demo004.databinding.ActivityMainBinding
 import com.example.demo004.databinding.FragmentRepositoryDetailBinding
+import com.example.demo004.databinding.FragmentRepositoryListBinding
 import com.example.demo004.model.Beer
 import com.example.demo004.network.PunkApiSevice
 import retrofit2.Call
@@ -22,20 +24,23 @@ import kotlin.math.log
 
 class RepositoryListFragment : Fragment() {
     private lateinit var clickMe : TextView
-    private var _binding: FragmentRepositoryDetailBinding? = null
+    private var _binding: FragmentRepositoryListBinding? = null
     private val binding
     get() = _binding !!
+    private  val adapter = BeerAdapter()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentRepositoryDetailBinding.inflate(inflater, container, false)
+        _binding = FragmentRepositoryListBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.rvBeer.adapter = adapter
+        binding.rvBeer.layoutManager = LinearLayoutManager(context)
         requestData()
     }
 
@@ -53,6 +58,7 @@ class RepositoryListFragment : Fragment() {
             override fun onResponse(call: Call<List<Beer>>, response: Response<List<Beer>>) {
                 if (response.isSuccessful) {
                     Log.d("getAllBeers", "beers:${response.body()}")
+                    adapter.submitList(response.body())
                 }else{
                     showError()
                 }
