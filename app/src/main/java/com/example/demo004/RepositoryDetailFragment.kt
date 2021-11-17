@@ -6,16 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.example.demo004.databinding.FragmentRepositoryDetailBinding
 
 class RepositoryDetailFragment : Fragment() {
+    private var _binding: FragmentRepositoryDetailBinding? = null
+    private val binding
+        get() = _binding !!
     private lateinit var clickMe : TextView
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_repository_detail, container, false)
+        _binding = FragmentRepositoryDetailBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -27,5 +31,9 @@ class RepositoryDetailFragment : Fragment() {
                 .replace(R.id.fragmentContainerView, fg)
                 .commit()
         }
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

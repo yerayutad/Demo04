@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import com.example.demo004.databinding.ActivityMainBinding
+import com.example.demo004.databinding.FragmentRepositoryDetailBinding
 import com.example.demo004.model.Beer
 import com.example.demo004.network.PunkApiSevice
 import retrofit2.Call
@@ -20,18 +22,26 @@ import kotlin.math.log
 
 class RepositoryListFragment : Fragment() {
     private lateinit var clickMe : TextView
+    private var _binding: FragmentRepositoryDetailBinding? = null
+    private val binding
+    get() = _binding !!
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_repository_list, container, false)
+        _binding = FragmentRepositoryDetailBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requestData()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
     private fun requestData(){
         val retrofit = Retrofit.Builder()
