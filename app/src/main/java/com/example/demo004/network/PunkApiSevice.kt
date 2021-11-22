@@ -7,4 +7,6 @@ import retrofit2.http.GET
 interface PunkApiSevice {
     @GET("beers")
     fun getAllBeers(): Call<List<Beer>>
+    @GET("beers/1")
+    fun findBeerById(beerId: String): Call<List<Beer>>
 }

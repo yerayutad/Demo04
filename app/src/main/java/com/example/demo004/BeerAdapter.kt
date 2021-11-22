@@ -9,7 +9,7 @@ import com.example.demo004.databinding.ItemBeerBinding
 import com.example.demo004.extensions.imageUrl
 import com.example.demo004.model.Beer
 
-class BeerAdapter: ListAdapter<Beer, BeerAdapter.ViewHolder>(BeerItemCallback()) {
+class BeerAdapter(private val onBeerClicked: (Beer)-> Unit): ListAdapter<Beer, BeerAdapter.ViewHolder>(BeerItemCallback()) {
     inner class ViewHolder(val binding: ItemBeerBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -23,6 +23,7 @@ class BeerAdapter: ListAdapter<Beer, BeerAdapter.ViewHolder>(BeerItemCallback())
         holder.binding.tvBeerName.text = beer.name
         holder.binding.tvBeerAvb.text = beer.abv.toString()
         holder.binding.ivBeerImage.imageUrl(beer.imageUrl)
+        holder.binding.root.setOnClickListener { onBeerClicked(beer) }
     }
 
 }

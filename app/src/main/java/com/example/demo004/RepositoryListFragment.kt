@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.demo004.databinding.ActivityMainBinding
 import com.example.demo004.databinding.FragmentRepositoryDetailBinding
@@ -27,7 +28,14 @@ class RepositoryListFragment : Fragment() {
     private var _binding: FragmentRepositoryListBinding? = null
     private val binding
     get() = _binding !!
-    private  val adapter = BeerAdapter()
+    private  val adapter = BeerAdapter { beer ->
+        val action =
+            RepositoryListFragmentDirections.actionRepositoryListFragmentToRepositoryDetailFragment(
+                beer.id.toString()
+            )
+        findNavController().navigate(action)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -50,7 +58,7 @@ class RepositoryListFragment : Fragment() {
     }
     private fun requestData(){
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://api.punkapi.com/v2")
+            .baseUrl("https://api.punkapi.com/v2/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val service = retrofit.create(PunkApiSevice::class.java)

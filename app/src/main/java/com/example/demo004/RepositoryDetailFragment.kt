@@ -24,16 +24,13 @@ class RepositoryDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        clickMe = view.findViewById(R.id.tvClickMe)
-        clickMe.setOnClickListener{
-            val fg = RepositoryDetailFragment()
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainerView, fg)
-                .commit()
-        }
+        requestData()
     }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+    fun requestData(){
+
     }
 }
